@@ -1,0 +1,14 @@
+.square {
+	border-radius: 0px;
+}
+
+.jumbotron {
+	height: 200px;
+	padding-top: 65px;
+	background-image: linear-gradient(to right, #007bff, #000);
+	color: #fff;
+}
+
+.register-btn {
+	width: 100%;
+}
