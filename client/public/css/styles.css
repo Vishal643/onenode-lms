@@ -9,6 +9,7 @@
 	color: #fff;
 }
 
-.register-btn {
+.register-btn,
+.login-btn {
 	width: 100%;
 }
