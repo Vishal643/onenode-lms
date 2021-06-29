@@ -3,8 +3,9 @@
 }
 
 .jumbotron {
-	height: 200px;
+	height: auto;
 	padding-top: 65px;
+	padding-bottom: 65px;
 	background-image: linear-gradient(to right, #007bff, #000);
 	color: #fff;
 }
