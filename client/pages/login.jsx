@@ -10,8 +10,8 @@ import { toast } from 'react-toastify';
 import { Context } from '../context/index';
 
 const Login = () => {
-	const [email, setEmail] = useState('vishalkumar199812@gmail.com');
-	const [password, setPassword] = useState('111111');
+	const [email, setEmail] = useState('champchaudhary345@gmail.com');
+	const [password, setPassword] = useState('123456');
 	const [loading, setLoading] = useState(false);
 
 	//global state
@@ -38,7 +38,7 @@ const Login = () => {
 
 			//save logged in user in localstorage
 			window.localStorage.setItem('user', JSON.stringify(data));
-			router.push('/');
+			router.push('/user');
 		} catch (err) {
 			setLoading(false);
 			toast.error(err.response.data);

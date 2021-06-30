@@ -6,6 +6,8 @@ import {
 	LoginOutlined,
 	UserAddOutlined,
 	CoffeeOutlined,
+	CarryOutOutlined,
+	TeamOutlined,
 } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 
@@ -44,7 +46,7 @@ const TopNav = () => {
 	};
 
 	return (
-		<Menu mode='horizontal' selectedKeys={[currentState]}>
+		<Menu mode='horizontal' selectedKeys={[currentState]} className='mb-2'>
 			<Item
 				key='/'
 				icon={<AppstoreOutlined />}
@@ -53,6 +55,26 @@ const TopNav = () => {
 					<a>App</a>
 				</Link>
 			</Item>
+
+			{user && user.role && user.role.includes('Instructor') ? (
+				<Item
+					key='/instructor/course/create'
+					icon={<CarryOutOutlined />}
+					onClick={(e) => setCurrentState(e.key)}>
+					<Link href='/instructor/course/create'>
+						<a>Create Course</a>
+					</Link>
+				</Item>
+			) : (
+				<Item
+					key='/user/become-instructor'
+					icon={<TeamOutlined />}
+					onClick={(e) => setCurrentState(e.key)}>
+					<Link href='/user/become-instructor'>
+						<a>Become an Instructor</a>
+					</Link>
+				</Item>
+			)}
 
 			{user === null && (
 				<>
@@ -76,12 +98,22 @@ const TopNav = () => {
 				</>
 			)}
 
+			{user && user.role && user.role.includes('Instructor') && (
+				<Item
+					className='ms-auto'
+					key='/instructor'
+					icon={<TeamOutlined />}
+					onClick={(e) => setCurrentState(e.key)}>
+					<Link href='/instructor'>
+						<a>Instructor</a>
+					</Link>
+				</Item>
+			)}
 			{user !== null && (
 				<SubMenu
 					key='/submenu'
 					icon={<CoffeeOutlined />}
-					title={user && user.name}
-					className='ms-auto'>
+					title={user && user.name}>
 					<ItemGroup>
 						<Item key='/user'>
 							<Link href='/user'>

@@ -11,6 +11,7 @@
 }
 
 .register-btn,
-.login-btn {
+.login-btn,
+.gen-btn {
 	width: 100%;
 }

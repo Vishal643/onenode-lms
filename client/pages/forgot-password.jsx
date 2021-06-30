@@ -60,7 +60,8 @@ const ForgotPassword = () => {
 		if (user !== null) {
 			router.push('/');
 		}
-	}, []);
+	}, [user]);
+	
 	return (
 		<>
 			<h1 className='jumbotron text-center bg-primary square'>
