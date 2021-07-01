@@ -100,7 +100,6 @@ const TopNav = () => {
 
 			{user && user.role && user.role.includes('Instructor') && (
 				<Item
-					className='ms-auto'
 					key='/instructor'
 					icon={<TeamOutlined />}
 					onClick={(e) => setCurrentState(e.key)}>
@@ -111,6 +110,7 @@ const TopNav = () => {
 			)}
 			{user !== null && (
 				<SubMenu
+					className='ms-auto'
 					key='/submenu'
 					icon={<CoffeeOutlined />}
 					title={user && user.name}>

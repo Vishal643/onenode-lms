@@ -5,6 +5,7 @@ import CourseCreateForm from '../../../components/forms/CourseCreateForm';
 import { toast } from 'react-toastify';
 import Resizer from 'react-image-file-resizer';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const CreateCourse = () => {
 	const [values, setValues] = useState({
@@ -16,6 +17,8 @@ const CreateCourse = () => {
 		loading: false,
 		category: '',
 	});
+
+	const router = useRouter();
 
 	const [preview, setPreview] = useState('');
 	const [uploadButtonText, setUploadButtonText] = useState('Upload Image');
@@ -66,7 +69,16 @@ const CreateCourse = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(values);
+		try {
+			const { data } = await axios.post('/api/course', {
+				...values,
+				image,
+			});
+			toast.success('Great now you can start adding lessons');
+			router.push('/instructor');
+		} catch (err) {
+			toast.error(err.response.data);
+		}
 	};
 
 	return (

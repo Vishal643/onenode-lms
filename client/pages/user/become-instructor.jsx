@@ -4,14 +4,13 @@ import { Context } from '../../context/index';
 
 import axios from 'axios';
 
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { Button } from 'antd';
 import {
 	SettingOutlined,
 	UserSwitchOutlined,
 	LoadingOutlined,
 } from '@ant-design/icons';
-import UserRoute from '../../components/routes/UserRoute';
 
 const BecomeInstructor = () => {
 	const [loading, setLoading] = useState(false);
@@ -24,7 +23,6 @@ const BecomeInstructor = () => {
 		try {
 			setLoading(true);
 			const res = await axios.post('/api/make-instructor');
-			console.log(res);
 			window.location.href = res.data;
 		} catch (err) {
 			console.log(err.response.status);

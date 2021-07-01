@@ -44,11 +44,11 @@ const CourseCreateForm = (props) => {
 					onChange={handleChange}></textarea>
 			</div>
 
-			<div className='form-row pt-3'>
-				<div className='col'>
+			<div className='form-row pt-3 d-flex'>
+				<div className='col-md-10'>
 					<div className='form-group'>
 						<Select
-							onChange={(v) => setValues({ ...values, paid: !paid })}
+							onChange={(v) => setValues({ ...values, paid: v, price: 0 })}
 							value={paid}
 							style={{ width: '100%' }}
 							size='large'>
@@ -58,15 +58,17 @@ const CourseCreateForm = (props) => {
 					</div>
 				</div>
 				{paid && (
-					<div className='form-group pt-3'>
-						<Select
-							defaultValue='$9.99'
-							style={{ width: '100%' }}
-							onChange={(v) => setValues({ ...values, price: v })}
-							tokenSeparators={[,]}
-							size='large'>
-							{children}
-						</Select>
+					<div className='col-md-2'>
+						<div className='form-group'>
+							<Select
+								defaultValue='$9.99'
+								style={{ width: '100%' }}
+								onChange={(v) => setValues({ ...values, price: v })}
+								tokenSeparators={[,]}
+								size='large'>
+								{children}
+							</Select>
+						</div>
 					</div>
 				)}
 			</div>

@@ -1,12 +1,12 @@
 import User from '../models/user';
 import queryString from 'query-string';
+import Course from '../models/course';
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 export const makeInstructor = async (req, res) => {
 	try {
 		//1. find user from db
-
 		const user = await User.findById(req.user._id).exec();
 
 		//2. if user do not have stripe account_id yet then create the new one
@@ -75,3 +75,15 @@ export const currentInstructor = async (req, res) => {
 	}
 };
 
+export const instructorCourse = async (req, res) => {
+	try {
+		const course = await Course.find({
+			instructor: req.user._id,
+		})
+			.sort({ createdAt: -1 })
+			.exec();
+		res.send(course);
+	} catch (err) {
+		console.log(err);
+	}
+};
