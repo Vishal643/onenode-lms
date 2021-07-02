@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { SyncOutlined } from '@ant-design/icons';
-import Link from 'next/link';
 import { Context } from '../context/index';
 import { useRouter } from 'next/router';
 
@@ -51,6 +50,7 @@ const ForgotPassword = () => {
 			toast.success(
 				'Password reset success!. Now you can login with your new password',
 			);
+			router.push('/login');
 		} catch (err) {
 			setLoading(false);
 			toast.error(err.response.data);
@@ -61,7 +61,7 @@ const ForgotPassword = () => {
 			router.push('/');
 		}
 	}, [user]);
-	
+
 	return (
 		<>
 			<h1 className='jumbotron text-center bg-primary square'>

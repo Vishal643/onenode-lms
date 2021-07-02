@@ -1,7 +1,12 @@
 import express from 'express';
 
 //controllers
-import { uploadImage, removeImage, createCourse } from '../controllers/course';
+import {
+	uploadImage,
+	removeImage,
+	createCourse,
+	getSingleCourse,
+} from '../controllers/course';
 
 //middlewares
 import { isInstructor, requireSignin } from '../middlewares/index';
@@ -15,5 +20,7 @@ router.post('/course/remove-image', removeImage);
 
 //course
 router.post('/course', requireSignin, isInstructor, createCourse);
+
+router.get('/course/:slug', getSingleCourse);
 
 module.exports = router;

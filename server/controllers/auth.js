@@ -164,7 +164,6 @@ export const forgotPassword = async (req, res) => {
 		}
 
 		//prepare for email
-
 		const params = {
 			Source: process.env.EMAIL_FROM,
 			Destination: {
@@ -186,7 +185,7 @@ export const forgotPassword = async (req, res) => {
 				},
 				Subject: {
 					Charset: 'UTF-8',
-					Data: 'Reset Password Code',
+					Data: 'Password Reset Code',
 				},
 			},
 		};
@@ -210,7 +209,7 @@ export const resetPassword = async (req, res) => {
 
 		const hashedPassword = await hashPassword(newPassword);
 
-		const user = User.findOneAndUpdate(
+		await User.findOneAndUpdate(
 			{
 				email,
 				passwordResetCode: code,

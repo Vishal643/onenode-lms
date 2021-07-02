@@ -36,6 +36,7 @@ const CourseCreateForm = (props) => {
 			</div>
 			<div className='form-group pt-3'>
 				<textarea
+					placeholder='Please use markdown format to write description...'
 					className='form-control'
 					name='description'
 					value={description}
