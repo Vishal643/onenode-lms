@@ -1,5 +1,4 @@
 import { Select, Button, Avatar, Badge } from 'antd';
-
 const { Option } = Select;
 
 const CourseCreateForm = (props) => {

@@ -21,8 +21,8 @@ const InstructorIndex = () => {
 			<h1 className='jumbotron text-center square'>Instructor dashboard</h1>
 			{courses &&
 				courses.map((course) => (
-					<>
-						<div key={course._id} className='media pt-2 d-flex'>
+					<React.Fragment key={course._id}>
+						<div className='media pt-2 d-flex'>
 							<Avatar
 								size={80}
 								src={course.image ? course.image.Location : '/course.png'}
@@ -75,7 +75,7 @@ const InstructorIndex = () => {
 								</div>
 							</div>
 						</div>
-					</>
+					</React.Fragment>
 				))}
 		</InstructorRoute>
 	);

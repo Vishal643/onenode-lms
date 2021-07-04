@@ -53,10 +53,14 @@ const CourseView = () => {
 			videoData.append('video', file);
 
 			//save progress bar and send video as form data to backend
-			const { data } = await axios.post('/api/course/video-upload', videoData, {
-				onUploadProgress: (e) =>
-					setProgress(Math.round((100 * e.loaded) / e.total)),
-			});
+			const { data } = await axios.post(
+				`/api/course/video-upload/${course.instructor._id}`,
+				videoData,
+				{
+					onUploadProgress: (e) =>
+						setProgress(Math.round((100 * e.loaded) / e.total)),
+				},
+			);
 
 			console.log(data);
 			setValues({ ...values, video: data });
@@ -72,7 +76,7 @@ const CourseView = () => {
 		try {
 			setUploading(true);
 			const { data } = await axios.post(
-				'/api/course/video-remove',
+				`/api/course/video-remove/${course.instructor._id}`,
 				values.video,
 			);
 			setValues({ ...values, video: {} });

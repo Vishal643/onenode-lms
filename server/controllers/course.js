@@ -110,6 +110,9 @@ export const getSingleCourse = async (req, res) => {
 
 export const uploadVideo = async (req, res) => {
 	try {
+		if (req.user._id != req.params.instructorId) {
+			return res.status(400).send('Unauthorized access');
+		}
 		const { video } = req.files;
 		if (!video) return res.status(400).send('No video');
 
@@ -137,6 +140,9 @@ export const uploadVideo = async (req, res) => {
 
 export const removeVideo = async (req, res) => {
 	try {
+		if (req.user._id != req.params.instructorId) {
+			return res.status(400).send('Unauthorized access');
+		}
 		const { Bucket, Key } = req.body;
 		if (!Key) return res.status(400).send('No video');
 
