@@ -8,6 +8,7 @@ import {
 	getSingleCourse,
 	uploadVideo,
 	removeVideo,
+	addLesson,
 } from '../controllers/course';
 
 //middlewares
@@ -33,4 +34,7 @@ router.post(
 );
 
 router.post('/course/video-remove/:instructorId', requireSignin, removeVideo);
+
+router.post('/course/lesson/:slug/:instructorId', requireSignin, addLesson);
+
 module.exports = router;

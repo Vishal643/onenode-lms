@@ -7,9 +7,7 @@ const AddLessonForm = (props) => {
 		values,
 		setValues,
 		uploading,
-		setUploading,
 		uploadButtonText,
-		setUploadButtonText,
 		progress,
 		handleAddLesson,
 		handleVideo,
@@ -17,7 +15,7 @@ const AddLessonForm = (props) => {
 	} = props;
 	return (
 		<div className='container pt-3'>
-			<form onSubmit={handleAddLesson}>
+			<form>
 				<input
 					type='text'
 					className='form-control square'
@@ -58,6 +56,7 @@ const AddLessonForm = (props) => {
 					/>
 				)}
 				<Button
+					onClick={handleAddLesson}
 					className='col mt-3 gen-btn'
 					size='large'
 					type='primary'
