@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Avatar, Tooltip, Button, Modal, List, Menu } from 'antd';
-import { EditOutlined, CheckOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+	EditOutlined,
+	CheckOutlined,
+	UploadOutlined,
+	QuestionOutlined,
+	CloseOutlined,
+} from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
@@ -48,6 +54,7 @@ const CourseView = () => {
 			);
 			// console.log(data);
 			setVisible(false);
+			setProgress(0);
 			setUploadButtonText('Upload Video');
 			setCourse(data);
 			setValues({ ...values, title: '', content: '', video: {} });
@@ -102,6 +109,34 @@ const CourseView = () => {
 		}
 	};
 
+	const handlePublish = async (e, courseId) => {
+		try {
+			let answer = window.confirm(
+				'Once you publish your course it will be live in the marketplace for users to enroll',
+			);
+			if (!answer) return;
+			const { data } = await axios.put(`/api/course/publish/${courseId}`);
+			setCourse(data);
+			toast.success('Congrats your course is now live');
+		} catch (err) {
+			toast.error('Course Publish failed. Try Again');
+		}
+	};
+
+	const handleUnPublish = async (e, courseId) => {
+		try {
+			let answer = window.confirm(
+				'Once you unpublish your course it will be not be available for users to enroll',
+			);
+			if (!answer) return;
+			const { data } = await axios.put(`/api/course/unpublish/${courseId}`);
+			setCourse(data);
+			toast.info('Your course is unpublished');
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	return (
 		<div className='container-fluid pt-3'>
 			{course && (
@@ -133,9 +168,26 @@ const CourseView = () => {
 									}>
 									<EditOutlined className='h5 pinter text-warning me-4' />
 								</Tooltip>
-								<Tooltip title='Publish'>
-									<CheckOutlined className='h5 pinter text-danger mr-4' />
-								</Tooltip>
+
+								{course.lessons && course.lessons.length < 5 ? (
+									<Tooltip title='Min-5 Lessons required to publish'>
+										<QuestionOutlined className='h5 pointer text-danger' />
+									</Tooltip>
+								) : course.published ? (
+									<Tooltip
+										onClick={(e) => handleUnPublish(e, course._id)}
+										title='Unpublish'
+										className='text-danger h5 pointer'>
+										<CloseOutlined />
+									</Tooltip>
+								) : (
+									<Tooltip
+										onClick={(e) => handlePublish(e, course._id)}
+										title='Publish'
+										className='text-success h5 pointer'>
+										<CheckOutlined />
+									</Tooltip>
+								)}
 							</div>
 						</div>
 						<div className='row'>

@@ -212,10 +212,10 @@ export const updateCourse = async (req, res) => {
 export const removeLesson = async (req, res) => {
 	const { slug, id } = req.params;
 
-	const course = await Course.findOne({ slug }).exec();
+	const course = await Course.findOne({ slug }).select('instructor').exec();
 
-	if (req.user._id != course.instructor) {
-		return res.status(400).send('Unauthorized access');
+	if (course.instructor._id != req.user._id) {
+		return res.status(400).send('Unauthorized');
 	}
 
 	const deletedCourse = await Course.findByIdAndUpdate(
@@ -256,4 +256,59 @@ export const updateLesson = async (req, res) => {
 		console.log(err);
 		return res.status(400).send('Update Lesson Failed!!!');
 	}
+};
+
+export const publishCourse = async (req, res) => {
+	try {
+		const { courseId } = req.params;
+
+		const course = await Course.findById(courseId).select('instructor').exec();
+
+		if (course.instructor._id != req.user._id) {
+			return res.status(400).send('Unauthorized');
+		}
+
+		const updated = await Course.findByIdAndUpdate(
+			courseId,
+			{
+				published: true,
+			},
+			{ new: true },
+		).exec();
+		res.json(updated);
+	} catch (err) {
+		console.log(err);
+		return res.status(400).send('Publish course failed');
+	}
+};
+
+export const unPublishCourse = async (req, res) => {
+	try {
+		const { courseId } = req.params;
+
+		const course = await Course.findById(courseId).select('instructor').exec();
+
+		if (course.instructor._id != req.user._id) {
+			return res.status(400).send('Unauthorized');
+		}
+
+		const updated = await Course.findByIdAndUpdate(
+			courseId,
+			{
+				published: false,
+			},
+			{ new: true },
+		).exec();
+		res.json(updated);
+	} catch (err) {
+		console.log(err);
+		return res.status(400).send('unpublish course failed');
+	}
+};
+
+export const getAllCourses = async (req, res) => {
+	const all = await Course.find({ published: true })
+		.populate('instructor', '_id name')
+		.exec();
+	res.json(all);
 };

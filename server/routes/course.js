@@ -5,6 +5,7 @@ import {
 	uploadImage,
 	removeImage,
 	createCourse,
+	getAllCourses,
 	getSingleCourse,
 	uploadVideo,
 	removeVideo,
@@ -12,6 +13,8 @@ import {
 	updateCourse,
 	removeLesson,
 	updateLesson,
+	publishCourse,
+	unPublishCourse,
 } from '../controllers/course';
 
 //middlewares
@@ -25,11 +28,12 @@ router.post('/course/upload-image', uploadImage);
 router.post('/course/remove-image', removeImage);
 
 //course
+router.get('/courses', getAllCourses);
+
 router.post('/course', requireSignin, isInstructor, createCourse);
 
 router.put('/course/:slug', requireSignin, updateCourse);
 
-router.put('/course/:slug/:id', requireSignin, removeLesson);
 router.get('/course/:slug', getSingleCourse);
 
 router.post(
@@ -41,7 +45,12 @@ router.post(
 
 router.post('/course/video-remove/:instructorId', requireSignin, removeVideo);
 
-router.post('/course/lesson/:slug/:instructorId', requireSignin, addLesson);
+//Publish and Unpublis course
+router.put('/course/publish/:courseId', requireSignin, publishCourse);
+router.put('/course/unpublish/:courseId', requireSignin, unPublishCourse);
 
+router.post('/course/lesson/:slug/:instructorId', requireSignin, addLesson);
 router.put('/course/lesson/:slug/:instructorId', requireSignin, updateLesson);
+router.put('/course/:slug/:id', requireSignin, removeLesson);
+
 module.exports = router;

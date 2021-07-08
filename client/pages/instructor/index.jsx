@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Avatar } from 'antd';
+import { Avatar, Tooltip } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 
@@ -63,13 +63,13 @@ const InstructorIndex = () => {
 									</div>
 									<div className='col-md-3 mt-3 text-center'>
 										{course.published ? (
-											<div>
+											<Tooltip title='Pulished'>
 												<CheckCircleOutlined className='h5 pointer text-success' />
-											</div>
+											</Tooltip>
 										) : (
-											<div>
+											<Tooltip title='Unpublished'>
 												<CloseCircleOutlined className='h5 pointer text-warning' />
-											</div>
+											</Tooltip>
 										)}
 									</div>
 								</div>

@@ -201,6 +201,7 @@ const CreateEdit = () => {
 		setUploadVideoButtonText('Upload Video');
 		setVisible(false);
 		setCurrent(data);
+		setProgress(0);
 		if (data.ok) {
 			let arr = values.lessons;
 			const index = arr.findIndex((el) => el._id === current._id);
