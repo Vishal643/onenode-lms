@@ -174,6 +174,8 @@ const CourseView = () => {
 								handleVideoRemove={handleVideoRemove}
 							/>
 						</Modal>
+
+						{/* Lessons List */}
 						<div className='row pb-5'>
 							<div className='col lesson-list'>
 								<h4>

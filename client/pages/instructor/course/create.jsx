@@ -98,9 +98,6 @@ const CreateCourse = () => {
 					/>
 				}
 			</div>
-			<pre>{JSON.stringify(values, null, 1)}</pre>
-			<hr />
-			<pre>{JSON.stringify(image)}</pre>
 		</InstructorRoute>
 	);
 };
