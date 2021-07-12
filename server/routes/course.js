@@ -15,6 +15,8 @@ import {
 	updateLesson,
 	publishCourse,
 	unPublishCourse,
+	checkEnrollment,
+	freeEnrollment,
 } from '../controllers/course';
 
 //middlewares
@@ -53,4 +55,8 @@ router.post('/course/lesson/:slug/:instructorId', requireSignin, addLesson);
 router.put('/course/lesson/:slug/:instructorId', requireSignin, updateLesson);
 router.put('/course/:slug/:id', requireSignin, removeLesson);
 
+//payment enrollment
+router.get('/check-enrollment/:courseId', requireSignin, checkEnrollment);
+
+router.post('/free-enrollment/:courseId', requireSignin, freeEnrollment);
 module.exports = router;

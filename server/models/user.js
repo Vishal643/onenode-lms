@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema(
 		stripe_account_id: '',
 		stripe_seller: {},
 		stripeSession: {},
+		courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
 	},
 	{ timestamps: true, versionKey: false },
 );

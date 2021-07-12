@@ -1,14 +1,19 @@
 import ReactMarkdown from 'react-markdown';
-import { Badge } from 'antd';
+import { Badge, Button } from 'antd';
+import { LoadingOutlined, SafetyOutlined } from '@ant-design/icons';
 import { currencyFormatter } from '../../utils/helper';
 import ReactPlayer from 'react-player';
 
 const SingleCourseCard = ({
 	course,
-	preview,
 	setPreview,
 	showModal,
 	setShowModal,
+	loading,
+	handleFreeEnrollment,
+	handlePaidEnrollment,
+	user,
+	enrolled,
 }) => {
 	const {
 		name,
@@ -22,7 +27,7 @@ const SingleCourseCard = ({
 		category,
 	} = course;
 	return (
-		<div className='jumbotron bg-primary square'>
+		<div className='jumbotron bg-primary square ps-4'>
 			<div className='row'>
 				<div className='col-md-8'>
 					<h1 className='text-light font-weight-bold'>{name}</h1>
@@ -57,15 +62,42 @@ const SingleCourseCard = ({
 								setShowModal(!showModal);
 							}}>
 							<ReactPlayer
-								className='react-player-div'
+								className='react-player-div me-2'
 								url={lessons[0].video.Location}
 								light={image.Location}
-								width='100%'
+								width='95%'
 								height='225px'
 							/>
 						</div>
 					) : (
-						<img src={image.Location} alt={name} className='img img-fluid' />
+						<img
+							src={image.Location}
+							alt={name}
+							className='img img-fluid me-2'
+							style={{ width: '400px' }}
+						/>
+					)}
+					{loading ? (
+						<div className='d-flex justify-content-center'>
+							<LoadingOutlined className='h1 text-danger' />
+						</div>
+					) : (
+						<Button
+							className='mb-3 mt-3 ms-2'
+							block
+							type='danger'
+							shape='round'
+							icon={<SafetyOutlined />}
+							size='large'
+							style={{ width: '90%' }}
+							disabled={loading}
+							onClick={paid ? handlePaidEnrollment : handleFreeEnrollment}>
+							{user
+								? enrolled.status
+									? 'Go to Course'
+									: 'Enroll'
+								: 'Login to Enroll'}
+						</Button>
 					)}
 				</div>
 			</div>

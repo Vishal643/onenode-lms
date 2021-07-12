@@ -6,11 +6,10 @@ const SingleCorseLessons = ({
 	lessons,
 	showModal,
 	setShowModal,
-	preview,
 	setPreview,
 }) => {
 	return (
-		<div className='container'>
+		<div className='container mt-4'>
 			<div className='row'>
 				<div className='col lesson-list'>
 					{lessons && <h4>{lessons.length} Lessons</h4>}
