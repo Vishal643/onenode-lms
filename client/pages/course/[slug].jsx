@@ -7,6 +7,8 @@ import PreviewModal from '../../components/modal/PreviewModal';
 import SingleCorseLessons from '../../components/cards/SingleCorseLessons';
 import { Context } from '../../context/index';
 
+import { loadStripe } from '@stripe/stripe-js';
+
 const SingleCourse = ({ course }) => {
 	const [showModal, setShowModal] = useState(false);
 	const [preview, setPreview] = useState('');
@@ -17,13 +19,9 @@ const SingleCourse = ({ course }) => {
 		state: { user },
 	} = useContext(Context);
 
-	const handlePaidEnrollment = () => {
-		console.log('Handle Paid Enrollment');
-	};
-
-	const handleFreeEnrollment = async (e) => {
-		e.preventDefault();
+	const handlePaidEnrollment = async () => {
 		try {
+			setLoading(true);
 			//check if user is logged in
 			if (!user) router.push('/login');
 
@@ -31,7 +29,35 @@ const SingleCourse = ({ course }) => {
 			if (enrolled.status) {
 				return router.push(`/user/course/${enrolled.course.slug}`);
 			}
+
+			const { data } = await axios.post(`/api/paid-enrollment/${course._id}`);
+
+			const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+
+			stripe.redirectToCheckout({ sessionId: data });
+
+			// toast.success('');
+			// setLoading(false);
+			// router.push(`/user/course/${data.course.slug}`);
+		} catch (err) {
+			toast.error('Enrollment failed try again');
+			console.log(err);
+			setLoading(false);
+		}
+	};
+
+	const handleFreeEnrollment = async (e) => {
+		e.preventDefault();
+		try {
 			setLoading(true);
+			//check if user is logged in
+			if (!user) router.push('/login');
+
+			//check if already enrolled
+			if (enrolled.status) {
+				return router.push(`/user/course/${enrolled.course.slug}`);
+			}
+
 			const { data } = await axios.post(`/api/free-enrollment/${course._id}`);
 			toast.success(data.message);
 			setLoading(false);
@@ -44,7 +70,6 @@ const SingleCourse = ({ course }) => {
 
 	const checkEnrollment = async () => {
 		const { data } = await axios.get(`/api/check-enrollment/${course._id}`);
-		console.log('data', data);
 		setEnrolled(data);
 	};
 	useEffect(() => {

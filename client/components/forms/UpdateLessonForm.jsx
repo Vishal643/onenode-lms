@@ -34,7 +34,7 @@ const UpdateLessonForm = (props) => {
 					placeholder='Content'
 				/>
 
-				<div >
+				<div>
 					{!uploading && current.video && current.video.Location && (
 						<div className='d-flex ps-2 pt-3 justify-content-center'>
 							<ReactPlayer
@@ -63,7 +63,7 @@ const UpdateLessonForm = (props) => {
 					<Switch
 						className='float-end  mt-3'
 						disabled={uploading}
-						defaultChecked={current.free_preview}
+						checked={current.free_preview}
 						name='Free Preview'
 						onChange={(v) => setCurrent({ ...current, free_preview: v })}
 					/>

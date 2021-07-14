@@ -17,6 +17,8 @@ import {
 	unPublishCourse,
 	checkEnrollment,
 	freeEnrollment,
+	paidEnrollment,
+	stripeSuccess,
 } from '../controllers/course';
 
 //middlewares
@@ -59,4 +61,8 @@ router.put('/course/:slug/:id', requireSignin, removeLesson);
 router.get('/check-enrollment/:courseId', requireSignin, checkEnrollment);
 
 router.post('/free-enrollment/:courseId', requireSignin, freeEnrollment);
+router.post('/paid-enrollment/:courseId', requireSignin, paidEnrollment);
+
+router.get('/stripe-success/:courseId', requireSignin, stripeSuccess);
+
 module.exports = router;
