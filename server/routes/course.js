@@ -19,10 +19,11 @@ import {
 	freeEnrollment,
 	paidEnrollment,
 	stripeSuccess,
+	userCourses,
 } from '../controllers/course';
 
 //middlewares
-import { isInstructor, requireSignin } from '../middlewares/index';
+import { isEnrolled, isInstructor, requireSignin } from '../middlewares/index';
 
 const router = express.Router();
 
@@ -64,5 +65,9 @@ router.post('/free-enrollment/:courseId', requireSignin, freeEnrollment);
 router.post('/paid-enrollment/:courseId', requireSignin, paidEnrollment);
 
 router.get('/stripe-success/:courseId', requireSignin, stripeSuccess);
+
+router.get('/user-courses', requireSignin, userCourses);
+
+router.get('/user/course/:slug', requireSignin, isEnrolled, getSingleCourse);
 
 module.exports = router;
